@@ -1,0 +1,31 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: vittadiet-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - vittadiet_pgdata:/var/lib/postgresql/data
+    networks:
+      - vittadiet-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg.isready -U {DB_USER} -d ${DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  vittadiet_pgdata:
+    driver: local
+
+networks:
+  vittadiet-network:
+    driver: bridge
+
+
