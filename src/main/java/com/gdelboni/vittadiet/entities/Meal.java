@@ -3,10 +3,16 @@ package com.gdelboni.vittadiet.entities;
 import java.time.LocalDateTime;
 import java.util.List;
 import com.gdelboni.vittadiet.enums.MealPeriod;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.Getter;
 
 @Getter
 public class Meal {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private MealPeriod mealPeriod;
     private final List<Food> mealComponents;
     private LocalDateTime mealHour;
