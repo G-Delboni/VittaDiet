@@ -1,0 +1,7 @@
+CREATE TABLE weight_logs (
+     id UUID PRIMARY KEY,
+     user_id VARCHAR(255) NOT NULL,
+     weight DOUBLE PRECISION NOT NULL,
+     logged_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+     CONSTRAINT fk_user_weight FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);

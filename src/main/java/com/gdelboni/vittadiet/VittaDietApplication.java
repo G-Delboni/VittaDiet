@@ -8,6 +8,7 @@ public class VittaDietApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(VittaDietApplication.class, args);
+		System.out.println(System.getenv("DB_USER"));
 	}
 
 }

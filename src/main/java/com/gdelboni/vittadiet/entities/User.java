@@ -2,8 +2,7 @@ package com.gdelboni.vittadiet.entities;
 
 import com.gdelboni.vittadiet.enums.UserGender;
 import com.gdelboni.vittadiet.enums.UserRole;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -13,6 +12,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -24,14 +24,19 @@ import java.util.List;
 @NullMarked
 @EqualsAndHashCode(of = "id")
 public class User implements UserDetails{
+    @Id
     private String id;
     private String username;
     private String email;
     private String password;
+    @Enumerated(EnumType.STRING)
     private UserRole role;
-    private Double weight;
     private Double height;
+    @Enumerated(EnumType.STRING)
     private UserGender gender;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<WeightLog> weightLogs =  new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
