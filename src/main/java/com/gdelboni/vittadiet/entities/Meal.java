@@ -3,32 +3,39 @@ package com.gdelboni.vittadiet.entities;
 import java.time.LocalDateTime;
 import java.util.List;
 import com.gdelboni.vittadiet.enums.MealPeriod;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.jspecify.annotations.NullMarked;
 
+@Table(name = "meal")
+@Entity(name = "meal")
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@NullMarked
 public class Meal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Enumerated(EnumType.STRING)
     private MealPeriod mealPeriod;
-    private final List<Food> mealComponents;
+    private List<MealItem> mealItems;
     private LocalDateTime mealHour;
 
-    public Meal(MealPeriod mealPeriod, List<Food> mealComponents, LocalDateTime mealHour) {
+    public Meal(MealPeriod mealPeriod, List<MealItem> mealItems, LocalDateTime mealHour) {
         this.mealPeriod = mealPeriod;
-        this.mealComponents = mealComponents;
+        this.mealItems = mealItems;
         this.mealHour = mealHour;
     }
 
-    public void addFood(Food food) {
-        mealComponents.add(food);
+    public void addFood(MealItem mealItem) {
+        mealItems.add(mealItem);
     }
 
-    public void removeFood(Food food) {
-        mealComponents.remove(food);
+    public void removeMealItem(MealItem mealItem) {
+        mealItems.remove(mealItem);
     }
 
     public void changePeriod(MealPeriod mealPeriod) {
