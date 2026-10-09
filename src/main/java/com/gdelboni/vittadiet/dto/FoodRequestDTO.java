@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class foodRequestDTO {
+public class FoodRequestDTO {
     private String foodName;
     private Double foodQuantityInGrams;
 }

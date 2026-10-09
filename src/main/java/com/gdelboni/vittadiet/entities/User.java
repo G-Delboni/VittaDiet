@@ -35,6 +35,12 @@ public class User implements UserDetails{
     @Enumerated(EnumType.STRING)
     private UserGender gender;
 
+    public User(String email, String password, String userRole) {
+        this.email = email;
+        this.password = password;
+        this.role = UserRole.USER;
+    }
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<WeightLog> weightLogs =  new ArrayList<>();
 

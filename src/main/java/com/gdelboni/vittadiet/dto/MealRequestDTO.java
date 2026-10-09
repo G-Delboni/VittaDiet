@@ -10,7 +10,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class mealRequestDTO {
+public class MealRequestDTO {
     private MealPeriod mealPeriod;
     private List<Food> mealComponents;
     private LocalDateTime mealHour;
