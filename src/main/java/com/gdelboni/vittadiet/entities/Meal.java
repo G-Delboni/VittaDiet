@@ -1,6 +1,7 @@
 package com.gdelboni.vittadiet.entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import com.gdelboni.vittadiet.enums.MealPeriod;
 import jakarta.persistence.*;
@@ -21,14 +22,12 @@ public class Meal {
     private Long id;
     @Enumerated(EnumType.STRING)
     private MealPeriod mealPeriod;
-    private List<MealItem> mealItems;
+    @OneToMany(mappedBy = "meal", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MealItem> mealItems = new ArrayList<>();
     private LocalDateTime mealHour;
-
-    public Meal(MealPeriod mealPeriod, List<MealItem> mealItems, LocalDateTime mealHour) {
-        this.mealPeriod = mealPeriod;
-        this.mealItems = mealItems;
-        this.mealHour = mealHour;
-    }
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public void addFood(MealItem mealItem) {
         mealItems.add(mealItem);

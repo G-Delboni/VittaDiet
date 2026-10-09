@@ -1,8 +1,8 @@
 CREATE TABLE meal (
     id BIGSERIAL PRIMARY KEY,
-    user_id BIGINT NOT NULL,
-    name VARCHAR(100) NOT NULL,
-    meal_date TIMESTAMP NOT NULL,
+    user_id VARCHAR(255) NOT NULL,
+    meal_period TEXT NOT NULL,
+    meal_hour TIMESTAMP NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT fk_meal_user

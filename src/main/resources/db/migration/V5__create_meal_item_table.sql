@@ -4,7 +4,7 @@ CREATE TABLE meal_item (
     meal_id BIGINT NOT NULL,
     food_id BIGINT NOT NULL,
 
-    quantity_grams DECIMAL(10, 2) NOT NULL,
+    quantity_in_grams DOUBLE PRECISION NOT NULL,
     calories DECIMAL(10, 2) NOT NULL,
 
     CONSTRAINT fk_meal_item_meal
