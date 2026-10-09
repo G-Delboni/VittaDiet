@@ -35,10 +35,10 @@ public class User implements UserDetails{
     @Enumerated(EnumType.STRING)
     private UserGender gender;
 
-    public User(String email, String password, String userRole) {
+    public User(String email, String password, UserRole userRole) {
         this.email = email;
         this.password = password;
-        this.role = UserRole.USER;
+        this.role = userRole;
     }
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

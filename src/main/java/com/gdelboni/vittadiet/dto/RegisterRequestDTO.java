@@ -1,6 +1,7 @@
 package com.gdelboni.vittadiet.dto;
 
 import com.gdelboni.vittadiet.enums.UserGender;
+import com.gdelboni.vittadiet.enums.UserRole;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,5 +14,5 @@ public class RegisterRequestDTO {
     private Double height;
     private Double weight;
     private UserGender userGender;
-    private String userRole;
+    private UserRole userRole;
 }
