@@ -26,7 +26,7 @@ public class Meal {
     private List<MealItem> mealItems = new ArrayList<>();
     private LocalDateTime mealHour;
     @ManyToOne(optional = false)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "id", insertable=false, updatable=false)
     private User user;
 
     public void addFood(MealItem mealItem) {

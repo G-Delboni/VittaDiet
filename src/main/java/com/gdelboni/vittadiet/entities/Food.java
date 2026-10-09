@@ -21,16 +21,10 @@ public class Food {
     @Column(unique = true)
     private Integer tacoCode;
     private String name;
-    private Double quantityInGrams;
     private Double caloriePerHundredGrams;
     private Double fatPerHundredGrams;
     private Double carbohydratePerHundredGrams;
     private Double proteinPerHundredGrams;
-
-    public Food(String name, Double quantityInGrams) {
-        this.name = name;
-        this.quantityInGrams = quantityInGrams;
-    }
 
 
 }
