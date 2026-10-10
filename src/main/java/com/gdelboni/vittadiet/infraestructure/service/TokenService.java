@@ -5,13 +5,14 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.gdelboni.vittadiet.entities.User;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
-import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.Instant;
-import java.time.LocalDateTime;
 
+@Service
 public class TokenService {
     @Value("${api.security.token.secret}")
     private String secret;
@@ -42,6 +43,14 @@ public class TokenService {
         catch (JWTVerificationException exception) {
             throw new RuntimeException("Error validating token", exception);
         }
+    }
+
+    public String recoverToken(HttpServletRequest httpServletRequest) {
+        var authorizationHeader = httpServletRequest.getHeader("Authorization");
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            return authorizationHeader.replace("Bearer ", "");
+        }
+        return null;
     }
 
     private Instant genExpirationDate() {

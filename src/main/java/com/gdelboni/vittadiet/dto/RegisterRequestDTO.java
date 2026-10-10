@@ -14,5 +14,4 @@ public class RegisterRequestDTO {
     private Double height;
     private Double weight;
     private UserGender userGender;
-    private UserRole userRole;
 }

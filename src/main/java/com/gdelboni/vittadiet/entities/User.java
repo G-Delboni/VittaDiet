@@ -25,6 +25,7 @@ import java.util.List;
 @EqualsAndHashCode(of = "id")
 public class User implements UserDetails{
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String username;
     private String email;
@@ -35,11 +36,15 @@ public class User implements UserDetails{
     @Enumerated(EnumType.STRING)
     private UserGender gender;
 
-    public User(String email, String password, UserRole userRole) {
+    public User(String username, String email, String password, Double height, UserGender gender) {
+        this.username = username;
         this.email = email;
         this.password = password;
-        this.role = userRole;
+        this.role = UserRole.USER;
+        this.height = height;
+        this.gender = gender;
     }
+
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<WeightLog> weightLogs =  new ArrayList<>();

@@ -7,6 +7,7 @@ import com.gdelboni.vittadiet.entities.User;
 import com.gdelboni.vittadiet.enums.UserRole;
 import com.gdelboni.vittadiet.infraestructure.service.TokenService;
 import com.gdelboni.vittadiet.repository.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.CacheControl;
@@ -14,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,8 +42,6 @@ public class AuthController {
         var authentication = authenticationManager.authenticate(userPassword);
         var token = tokenService.generateToken((User) Objects.requireNonNull(authentication.getPrincipal()));
         return ResponseEntity.ok(new LoginResponseDTO(token));
-//                .cacheControl(CacheControl.noStore())
-//                .body(new LoginResponseDTO("token"));
     }
 
     @PostMapping("/register")
@@ -49,7 +50,7 @@ public class AuthController {
             return ResponseEntity.badRequest().build();
         }
         String encryptedPassword = new BCryptPasswordEncoder().encode(registerRequestDTO.getPassword());
-        User newUser = new User(registerRequestDTO.getEmail(), encryptedPassword, registerRequestDTO.getUserRole());
+        User newUser = new User(registerRequestDTO.getUsername(), registerRequestDTO.getEmail(), encryptedPassword, registerRequestDTO.getHeight(), registerRequestDTO.getUserGender());
         this.userRepository.save(newUser);
 
         return ResponseEntity.ok().build();
