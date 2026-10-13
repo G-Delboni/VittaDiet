@@ -1,12 +1,14 @@
 package com.gdelboni.vittadiet.infraestructure.config;
 
 
+import com.gdelboni.vittadiet.infraestructure.filter.CookieAuthFilter;
 import com.gdelboni.vittadiet.infraestructure.filter.SecurityFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -23,11 +25,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration {
     @Autowired
     SecurityFilter securityFilter;
+    @Autowired
+    CookieAuthFilter cookieAuthFilter;
 
     @Bean
     public SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .csrf(AbstractHttpConfigurer::disable)
+                // .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize ->
                         authorize
@@ -37,6 +41,8 @@ public class SecurityConfiguration {
                                 .anyRequest()
                                 .authenticated())
                 .addFilterAfter(securityFilter, AuthenticationFilter.class)
+                .cors(Customizer.withDefaults())
+                .addFilterBefore(cookieAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
