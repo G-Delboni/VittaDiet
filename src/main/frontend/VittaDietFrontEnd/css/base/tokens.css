@@ -1,0 +1,31 @@
+/* ==========================================================================
+   TOKENS: única fonte de verdade para cores, fontes, espaçamentos e raios.
+   Para mudar a identidade visual do site, edite só este arquivo.
+   ========================================================================== */
+
+:root {
+  /* Paleta (Color Hunt: e8f5e9 / a5d6a7 / 66bb6a / 1b5e20) */
+  --color-soft: #e8f5e9;
+  --color-mint: #a5d6a7;
+  --color-leaf: #66bb6a;   /* só decorativo: texto sobre ele tem contraste baixo */
+  --color-forest: #1b5e20; /* texto principal e botões primários */
+  --color-white: #ffffff;
+
+  /* Complementares (derivadas, para texto secundário e erros) */
+  --color-text-muted: #3b5a3f;
+  --color-danger: #b3261e;
+
+  /* Fontes */
+  --font-display: "Young Serif", Georgia, serif;
+  --font-body: "Nunito", system-ui, sans-serif;
+
+  /* Raios */
+  --radius-sm: 1rem;
+  --radius-md: 1.5rem;
+  --radius-lg: 2.5rem;
+  --radius-pill: 999px;
+
+  /* Layout */
+  --page-gutter: clamp(1.25rem, 5vw, 4rem);
+  --max-width: 90rem;
+}

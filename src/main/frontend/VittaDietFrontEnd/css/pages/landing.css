@@ -1,0 +1,366 @@
+/* ==========================================================================
+   LANDING PAGE: a página é dividida em "faixas" (.band). Cada faixa tem duas
+   células lado a lado: a foto (esquerda, fundo verde) e a seção (direita).
+   Como as duas células ficam na mesma linha do grid, a foto ganha
+   automaticamente a altura da seção. Abaixo de 56rem, a foto vira uma faixa
+   horizontal acima da seção.
+   ========================================================================== */
+
+.landing {
+  max-width: var(--max-width);
+  margin-inline: auto;
+}
+
+/* ---------- Faixas: foto + seção ---------- */
+
+.band {
+  display: grid;
+  grid-template-columns: clamp(16rem, 25vw, 20rem) minmax(0, 1fr);
+}
+
+.band__photo {
+  display: flex;
+  padding: 0.55rem 1.5rem; /* 0.55 + 0.55 = 1.1rem de espaço entre as fotos */
+  background: var(--color-forest);
+}
+
+.band:first-child .band__photo {
+  padding-top: 1.5rem;
+}
+
+.band:last-child .band__photo {
+  padding-bottom: 1.5rem;
+}
+
+.band__content {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- Foto (tile) ---------- */
+
+.photo-tile {
+  position: relative;
+  flex: 1 1 0;           /* ocupa toda a célula da faixa */
+  min-height: 12rem;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+}
+
+.photo-tile--mint { background: var(--color-mint); }
+.photo-tile--leaf { background: var(--color-leaf); }
+.photo-tile--soft { background: var(--color-soft); }
+
+.photo-tile .illustration {
+  width: 55%;
+}
+
+/* Foto real: fica "solta" dentro do tile (position: absolute) para não
+   empurrar a altura da faixa. Quem manda na altura é a seção ao lado. */
+.photo-tile img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-position: center 80%; /* ajuste o foco de cada foto aqui */
+  object-fit: cover; /* preenche o espaço sem distorcer */
+}
+
+.photo-tile .chip {
+  position: absolute;
+  font-size: 100%;
+  bottom: 1.4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+/* Celular/tablet pequeno: só a coluna da seção; as fotos do banner somem */
+@media (max-width: 55.99rem) {
+  .band {
+    grid-template-columns: 1fr;
+  }
+
+  .band__photo {
+    display: none;
+  }
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2.5rem;
+  padding: 1.5rem var(--page-gutter) 4.5rem;
+}
+
+.hero__text {
+  flex: 1 1 24rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.hero__title {
+  font-size: clamp(2.4rem, 4.6vw, 3.9rem);
+  line-height: 1.1;
+}
+
+.hero__lead {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+}
+
+.hero__visual {
+  position: relative;
+  flex: 1 1 18rem;
+  min-height: 21rem;
+  display: grid;
+  place-items: center;
+}
+
+.hero__blob {
+  position: absolute;
+  inset: 0;
+  overflow: hidden; /* corta a imagem no formato do blob */
+  border-radius: 62% 38% 55% 45% / 48% 58% 42% 52%;
+  background: var(--color-mint); /* aparece enquanto a foto carrega */
+}
+
+.hero__blob img {
+  width: 100%;
+  height: 100%;
+  object-position: center 90%; /* igual a "bottom" */
+  object-fit: cover; /* preenche o espaço sem distorcer */
+}
+
+.hero__dot {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.hero__dot--big {
+  top: 4%;
+  right: 6%;
+  width: 4rem;
+  height: 4rem;
+  background: var(--color-leaf);
+}
+
+.hero__dot--small {
+  bottom: 8%;
+  left: 4%;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: orange;
+}
+
+.hero__visual .illustration {
+  position: relative;
+  width: 62%;
+}
+
+.hero__visual .chip {
+  position: absolute;
+  right: 6%;
+  bottom: 10%;
+}
+
+/* ---------- Sobre ---------- */
+
+.about {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+  padding: clamp(2.25rem, 5vw, 4.5rem) var(--page-gutter);
+  background: var(--color-soft);
+}
+
+.about__intro {
+  flex: 1 1 20rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.about__icon {
+  display: grid;
+  place-items: center;
+  width: 7.5rem;
+  height: 7.5rem;
+  border-radius: 2.25rem 2.25rem 2.25rem 0.5rem;
+  background: var(--color-mint);
+}
+
+.about__icon .illustration {
+  width: 62%;
+}
+
+.steps {
+  flex: 1 1 24rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* ---------- Visualização simplificada ---------- */
+
+.progress-section {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 3rem;
+  padding: clamp(2.25rem, 5vw, 4.5rem) var(--page-gutter);
+}
+
+.progress-section__text {
+  flex: 1 1 21rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.progress-placeholder {
+  position: relative;
+  flex: 1 1 20rem;
+  min-height: 23.75rem;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 3rem;
+  background: var(--color-soft);
+}
+
+.progress-placeholder__circle {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.progress-placeholder__circle--large {
+  right: -5.5rem;
+  bottom: -8.75rem;
+  width: 22.5rem;
+  height: 22.5rem;
+  background: var(--color-mint);
+}
+
+.progress-placeholder__circle--medium {
+  top: 2.25rem;
+  left: 2.25rem;
+  width: 7.5rem;
+  height: 7.5rem;
+  background: var(--color-leaf);
+}
+
+.progress-placeholder__circle--small {
+  top: 4.4rem;
+  right: 4.4rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  background: var(--color-white);
+}
+
+.progress-placeholder .illustration {
+  position: relative;
+  width: 38%;
+}
+
+.progress-placeholder .chip {
+  position: absolute;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  padding: 0.4rem 0.8rem;
+  text-align: center;
+}
+
+/* ---------- CTA (chamada para login/cadastro) ---------- */
+
+.cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.75rem;
+  margin: 0 var(--page-gutter) clamp(2.25rem, 5vw, 4rem);
+  padding: clamp(1.75rem, 4vw, 3rem);
+  border-radius: var(--radius-lg);
+  background: var(--color-mint);
+}
+
+.cta__body {
+  flex: 1 1 22rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.cta__icon {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+  background: var(--color-soft);
+}
+
+.cta__icon .illustration {
+  width: 65%;
+}
+
+.cta__title {
+  font-size: clamp(1.75rem, 3vw, 2.4rem);
+}
+
+.cta__text {
+  margin-top: 0.5rem;
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+
+.cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+}
+
+/* ---------- Rodapé ---------- */
+
+.site-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  margin-top: auto;
+  padding: 1.5rem var(--page-gutter) 2rem;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+/* ---------- Animação ao rolar (só se o JS estiver ativo) ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .reveal {
+    opacity: 0;
+    transform: translateY(1.5rem);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .js .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}

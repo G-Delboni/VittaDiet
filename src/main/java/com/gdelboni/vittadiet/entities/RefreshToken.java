@@ -21,7 +21,7 @@ public class RefreshToken {
     private User user;
     private String tokenHash;
     private LocalDateTime expirationDate;
-    private Boolean revoked;
+    private boolean revoked;
 
     public Boolean isRevoked() {
         return revoked;

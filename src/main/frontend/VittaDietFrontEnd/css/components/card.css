@@ -1,0 +1,84 @@
+/* ==========================================================================
+   CARDS e pequenos blocos reutilizáveis: .chip, .step-card, .check-list
+   ========================================================================== */
+
+/* Etiqueta pequena (usada nas legendas das fotos) */
+.chip {
+  padding: 0.25rem 0.7rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-white);
+  color: var(--color-forest);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* Passo numerado (seção Sobre) */
+.step-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.1rem;
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+}
+
+.step-card__number {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background: var(--color-forest);
+  color: var(--color-soft);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+}
+
+.step-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.step-card__title {
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.step-card__text {
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+/* Lista com ícone de "check" */
+.check-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  margin-top: 0.4rem;
+}
+
+.check-list__item {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.check-list__icon {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: var(--color-mint);
+}
+
+.check-list__icon svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}

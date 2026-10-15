@@ -1,0 +1,21 @@
+/* ==========================================================================
+   ILUSTRAÇÕES SVG: as cores vêm das variáveis do tokens.css.
+   As classes .fill-* e .stroke-* são usadas dentro do sprite SVG (index.html),
+   então trocar a paleta nos tokens recolore todas as ilustrações.
+   ========================================================================== */
+
+.illustration {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.fill-forest { fill: var(--color-forest); }
+.fill-leaf   { fill: var(--color-leaf); }
+.fill-mint   { fill: var(--color-mint); }
+.fill-soft   { fill: var(--color-soft); }
+.fill-white  { fill: var(--color-white); }
+
+.stroke-forest { stroke: var(--color-forest); }
+.stroke-leaf   { stroke: var(--color-leaf); }
+.stroke-mint   { stroke: var(--color-mint); }

@@ -9,6 +9,7 @@ import com.gdelboni.vittadiet.infraestructure.service.TokenService;
 import com.gdelboni.vittadiet.repository.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -33,6 +34,13 @@ public class AuthController {
     @Autowired
     private RefreshTokenService refreshTokenService;
 
+    @Value("${app.allowed-origin}")
+    private String allowedOrigin;
+
+    private boolean originOk(String origin) {
+        return origin == null || origin.equals(allowedOrigin);
+    }
+
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid LoginRequestDTO loginRequestDTO) {
         var userPassword = new UsernamePasswordAuthenticationToken(loginRequestDTO.getEmail(), loginRequestDTO.getPassword());
@@ -41,6 +49,7 @@ public class AuthController {
 
         var access = tokenService.generateToken(user);
         var refresh = refreshTokenService.create(user);
+
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, refreshCookie(refresh, Duration.ofDays(30)).toString())
@@ -68,8 +77,9 @@ public class AuthController {
 
     @PostMapping("/refresh")
     public ResponseEntity<LoginResponseDTO> refresh(
-            @CookieValue(name = "refresh_token", required = false) String raw) {
-        Optional<User> user = (raw == null) ? Optional.empty() : refreshTokenService.consume(raw);
+            @CookieValue(name = "refresh_token", required = false) String raw,
+            @RequestHeader(value = "Origin", required = false) String origin) {
+        if (!originOk(origin)) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();        Optional<User> user = (raw == null) ? Optional.empty() : refreshTokenService.consume(raw);
         if (user.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .header(HttpHeaders.SET_COOKIE, refreshCookie("", Duration.ZERO).toString())
@@ -84,7 +94,10 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<Void> logout(@CookieValue(name = "refresh_token", required = false) String raw) {
+    public ResponseEntity<Void> logout(
+            @CookieValue(name = "refresh_token", required = false) String raw,
+            @RequestHeader(value = "Origin", required = false) String origin){
+        if (!originOk(origin)) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         if (raw != null) refreshTokenService.revoke(raw);
         return ResponseEntity.noContent()
                 .header(HttpHeaders.SET_COOKIE, refreshCookie("", Duration.ZERO).toString())

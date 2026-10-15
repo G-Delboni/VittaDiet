@@ -1,0 +1,82 @@
+/* ==========================================================================
+   LOGIN PAGE: painel verde com mensagem (só em telas maiores) + cartão do
+   formulário com abas "Entrar" e "Criar conta".
+   ========================================================================== */
+
+.auth {
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.auth__aside {
+  display: none;
+  flex: 1 1 22rem;
+  max-width: 32rem;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 2.5rem;
+  background: var(--color-forest);
+  color: var(--color-soft);
+}
+
+.auth__tagline {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 3vw, 2.6rem);
+  line-height: 1.15;
+}
+
+.auth__art {
+  width: 70%;
+  margin-inline: auto;
+}
+
+.auth__main {
+  flex: 999 1 24rem;
+  display: grid;
+  place-items: center;
+  padding: 2rem var(--page-gutter);
+  background: var(--color-soft);
+}
+
+.auth__card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: min(100%, 28rem);
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  border-radius: var(--radius-lg);
+  background: var(--color-white);
+}
+
+.auth__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+}
+
+.auth__title {
+  margin-bottom: 1.25rem;
+  font-size: 1.75rem;
+}
+
+.auth__back {
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.auth__back:hover {
+  text-decoration: underline;
+}
+
+@media (min-width: 48rem) {
+  .auth__aside {
+    display: flex;
+  }
+}

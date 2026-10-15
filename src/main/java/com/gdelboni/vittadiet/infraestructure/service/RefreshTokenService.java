@@ -46,14 +46,15 @@ public class RefreshTokenService {
 
         RefreshToken refreshToken = new RefreshToken();
         refreshToken.setUser(user);
-        refreshToken.setTokenHash(String.valueOf(hash(rawToken)));
+        refreshToken.setTokenHash(hash(rawToken));
+        refreshToken.setExpirationDate(LocalDateTime.now().plus(tokenDuration));
         refreshTokenRepository.save(refreshToken);
         return rawToken;
     }
 
     @Transactional
     public Optional<User> consume(String rawToken){
-        var stored = refreshTokenRepository.findByTokenHash(rawToken);
+        var stored = refreshTokenRepository.findByTokenHash(hash(rawToken));
         if(stored.isEmpty()){return Optional.empty();}
         var token = stored.get();
         if (token.isRevoked()){
