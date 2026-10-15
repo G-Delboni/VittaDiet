@@ -1,75 +1,45 @@
-// ============================================================================
-// auth.js: login, cadastro, logout e "guards" de página.
-//
-// USE_MOCK = true faz o fluxo funcionar SEM backend (aceita qualquer dado
-// válido), para você treinar Landing -> Login -> User Page.
-// Quando o backend estiver pronto, mude para false e ajuste os TODOs abaixo.
-// ============================================================================
-
-import { request } from "/js/core/api.js";
-import { saveSession, getSession, clearSession } from "/js/core/storage.js";
-
-const USE_MOCK = true;
+import { request, refreshSession, ApiError } from "/js/core/api.js";
+import { getAccessToken, setAccessToken, saveUser, getUser, clearSession } from "/js/core/storage.js";
 
 export async function login({ email, password }) {
-  if (USE_MOCK) {
-    saveSession({ token: "mock-token", user: { name: nameFromEmail(email) } });
-    return;
+  try {
+    const data = await request("/auth/login", { method: "POST", body: { email, password }, auth: false });
+    setAccessToken(data.token);
+    if (data.username) saveUser({ name: data.username });
+  } catch (error) {
+    if (error.status === 401) throw new ApiError("E-mail ou senha inválidos.", 401);
+    throw error;
   }
-
-  // TODO: ajuste caminho e formato da resposta ao contrato real do backend.
-  const data = await request("/auth/login", {
-    method: "POST",
-    body: { email, password },
-    auth: false,
-  });
-  saveSession({ token: data.token, user: data.user });
 }
 
-export async function register({ name, email, password }) {
-  if (USE_MOCK) {
-    saveSession({ token: "mock-token", user: { name } });
-    return;
-  }
-
-  // TODO: ajuste caminho e formato da resposta ao contrato real do backend.
-  const data = await request("/auth/register", {
+export async function register({ name, email, password, height, gender }) {
+  await request("/auth/register", {
     method: "POST",
-    body: { name, email, password },
     auth: false,
+    body: { username: name, email, password, height: Number(height), userGender: gender },
   });
-  saveSession({ token: data.token, user: data.user });
+  await login({ email, password });              // o back não loga ao cadastrar
 }
 
-export function logout() {
+export async function logout() {
+  try { await request("/auth/logout", { method: "POST", auth: false }); } catch { /* segue */ }
   clearSession();
 }
 
-export function isAuthenticated() {
-  return Boolean(getSession()?.token);
+export const isAuthenticated = () => Boolean(getAccessToken());
+export const getCurrentUser = () => getUser();
+
+// Após recarregar a página o token em memória some: recupera pelo cookie
+export async function restoreSession() {
+  return getAccessToken() ? true : refreshSession();
 }
 
-export function getCurrentUser() {
-  return getSession()?.user ?? null;
-}
-
-/**
- * Guard da área logada. Devolve true se pode continuar; senão manda para o login.
- * Isto é só experiência de uso: a proteção real dos dados é feita pelo backend.
- */
-export function requireAuth() {
-  if (isAuthenticated()) return true;
+export async function requireAuth() {
+  if (await restoreSession()) return true;
   window.location.replace("/login/");
   return false;
 }
 
-/** Na página de login: quem já está logado vai direto para a área do usuário. */
-export function redirectIfAuthenticated() {
-  if (isAuthenticated()) {
-    window.location.replace("/app/");
-  }
-}
-
-function nameFromEmail(email) {
-  return email.split("@")[0];
+export async function redirectIfAuthenticated() {
+  if (await restoreSession()) window.location.replace("/app/");
 }

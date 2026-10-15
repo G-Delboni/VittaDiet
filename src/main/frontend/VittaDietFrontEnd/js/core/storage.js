@@ -1,36 +1,23 @@
-// ============================================================================
-// storage.js: guarda a sessão do usuário no navegador.
-//
-// Por enquanto usa sessionStorage (some ao fechar a aba), bom para estudar.
-// ATENÇÃO (segurança): qualquer script da página consegue ler sessionStorage /
-// localStorage, então um XSS vazaria o token. Quando o backend existir, a
-// opção mais segura é o servidor enviar o token num cookie HttpOnly; nesse
-// caso este arquivo deixa de guardar o token e guarda só dados de exibição.
-// ============================================================================
+// O access token fica SÓ em memória. O refresh token é um cookie HttpOnly
+// (o JavaScript nem enxerga). Em sessionStorage vão só dados de exibição.
+const USER_KEY = "vittadiet.user";
+let accessToken = null;
 
-const SESSION_KEY = "vittadiet.session";
+export const getAccessToken = () => accessToken;
+export const setAccessToken = (token) => { accessToken = token; };
 
-export function saveSession(session) {
-  try {
-    sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
-  } catch {
-    // Armazenamento bloqueado (modo privado, política do navegador): ignora.
-  }
+export function saveUser(user) {
+  try { sessionStorage.setItem(USER_KEY, JSON.stringify(user)); } catch { /* ignora */ }
 }
 
-export function getSession() {
+export function getUser() {
   try {
-    const raw = sessionStorage.getItem(SESSION_KEY);
+    const raw = sessionStorage.getItem(USER_KEY);
     return raw ? JSON.parse(raw) : null;
-  } catch {
-    return null;
-  }
+  } catch { return null; }
 }
 
 export function clearSession() {
-  try {
-    sessionStorage.removeItem(SESSION_KEY);
-  } catch {
-    // Nada a fazer.
-  }
+  accessToken = null;
+  try { sessionStorage.removeItem(USER_KEY); } catch { /* ignora */ }
 }

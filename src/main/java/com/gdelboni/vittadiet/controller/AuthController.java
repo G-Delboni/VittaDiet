@@ -38,7 +38,7 @@ public class AuthController {
     private String allowedOrigin;
 
     private boolean originOk(String origin) {
-        return origin == null || origin.equals(allowedOrigin);
+        return origin != null && !origin.equals(allowedOrigin);
     }
 
     @PostMapping("/login")
@@ -54,7 +54,7 @@ public class AuthController {
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, refreshCookie(refresh, Duration.ofDays(30)).toString())
                 .cacheControl(CacheControl.noStore())
-                .body(new LoginResponseDTO(access));
+                .body(new LoginResponseDTO(access, user.getUsername()));
     }
 
     private ResponseCookie refreshCookie(String value, Duration maxAge) {
@@ -79,7 +79,7 @@ public class AuthController {
     public ResponseEntity<LoginResponseDTO> refresh(
             @CookieValue(name = "refresh_token", required = false) String raw,
             @RequestHeader(value = "Origin", required = false) String origin) {
-        if (!originOk(origin)) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();        Optional<User> user = (raw == null) ? Optional.empty() : refreshTokenService.consume(raw);
+        if (originOk(origin)) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();        Optional<User> user = (raw == null) ? Optional.empty() : refreshTokenService.consume(raw);
         if (user.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .header(HttpHeaders.SET_COOKIE, refreshCookie("", Duration.ZERO).toString())
@@ -90,14 +90,14 @@ public class AuthController {
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, refreshCookie(newRefresh, Duration.ofDays(30)).toString())
                 .cacheControl(CacheControl.noStore())
-                .body(new LoginResponseDTO(access));
+                .body(new LoginResponseDTO(access, user.get().getUsername()));
     }
 
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(
             @CookieValue(name = "refresh_token", required = false) String raw,
             @RequestHeader(value = "Origin", required = false) String origin){
-        if (!originOk(origin)) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        if (originOk(origin)) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         if (raw != null) refreshTokenService.revoke(raw);
         return ResponseEntity.noContent()
                 .header(HttpHeaders.SET_COOKIE, refreshCookie("", Duration.ZERO).toString())

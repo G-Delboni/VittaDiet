@@ -73,13 +73,28 @@
           <form class="form" id="form-cadastro" novalidate>
             <div class="field">
               <label class="field__label" for="cadastro-nome">Nome</label>
-              <input class="field__input" id="cadastro-nome" name="name" type="text" autocomplete="name" required aria-describedby="erro-cadastro-nome">
+              <input class="field__input" id="cadastro-nome" name="username" type="text" autocomplete="name" required aria-describedby="erro-cadastro-nome">
               <p class="field__error" id="erro-cadastro-nome" hidden></p>
             </div>
             <div class="field">
               <label class="field__label" for="cadastro-email">E-mail</label>
               <input class="field__input" id="cadastro-email" name="email" type="email" autocomplete="email" required aria-describedby="erro-cadastro-email">
               <p class="field__error" id="erro-cadastro-email" hidden></p>
+            </div>
+            <div class="field">
+              <label class="field__label" for="cadastro-altura">Altura</label>
+              <input class="field__input" id="cadastro-altura" name="height" type="text" aria-describedby="erro-cadastro-altura">
+              <p class="field__error" id="erro-cadastro-altura" hidden></p>
+            </div>
+            <div class="field">
+              <label class="field__label" for="cadastro-genero">Sexo biológico</label>
+              <select class="field__input" id="cadastro-genero" name="gender" aria-describedby="erro-cadastro-genero">
+                <option value="" disabled selected>Selecione uma opção</option>
+                <option value="masculino">Masculino</option>
+                <option value="feminino">Feminino</option>
+                <option value="prefiro_nao_responder">Prefiro não responder</option>
+              </select>
+              <p class="field__error" id="erro-cadastro-genero" hidden></p>
             </div>
             <div class="field">
               <label class="field__label" for="cadastro-senha">Senha</label>

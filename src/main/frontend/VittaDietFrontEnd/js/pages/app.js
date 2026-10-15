@@ -7,7 +7,7 @@
 import { requireAuth, logout, getCurrentUser } from "/js/core/auth.js";
 import { initNavbar } from "/js/components/navbar.js";
 
-if (requireAuth()) {
+if (await requireAuth()) {
   initNavbar();
 
   const user = getCurrentUser();
@@ -17,8 +17,8 @@ if (requireAuth()) {
 
   document.querySelector("[data-app]").hidden = false;
 
-  document.querySelector("[data-logout]").addEventListener("click", () => {
-    logout();
+  document.querySelector("[data-logout]").addEventListener("click", async () => {
+    await logout();
     window.location.assign("/");
   });
 }
