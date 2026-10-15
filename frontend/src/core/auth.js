@@ -1,4 +1,4 @@
-import { request, refreshSession, ApiError } from "/js/core/api.js";
+import { request, refreshSession, ApiError } from "./api.js";
 import { getAccessToken, setAccessToken, saveUser, getUser, clearSession } from "/js/core/storage.js";
 
 export async function login({ email, password }) {

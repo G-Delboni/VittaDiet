@@ -1,4 +1,4 @@
-import { getAccessToken, setAccessToken, saveUser, clearSession } from "/js/core/storage.js";
+import { getAccessToken, setAccessToken, saveUser, clearSession } from "./storage.js";
 
 export const API_BASE_URL = "http://localhost:8080";
 

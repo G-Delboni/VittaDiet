@@ -41,6 +41,12 @@ public class AuthController {
         return origin != null && !origin.equals(allowedOrigin);
     }
 
+    private ResponseCookie refreshCookie(String value, Duration maxAge) {
+        return ResponseCookie.from("refresh_token", value)
+                .httpOnly(true).secure(true).sameSite("Strict")
+                .path("/auth").maxAge(maxAge).build();
+    }
+
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid LoginRequestDTO loginRequestDTO) {
         var userPassword = new UsernamePasswordAuthenticationToken(loginRequestDTO.getEmail(), loginRequestDTO.getPassword());
@@ -57,11 +63,6 @@ public class AuthController {
                 .body(new LoginResponseDTO(access, user.getUsername()));
     }
 
-    private ResponseCookie refreshCookie(String value, Duration maxAge) {
-        return ResponseCookie.from("refresh_token", value)
-                .httpOnly(true).secure(true).sameSite("Strict")
-                .path("/auth").maxAge(maxAge).build();
-    }
 
     @PostMapping("/register")
     public ResponseEntity<Void> register (@RequestBody @Valid RegisterRequestDTO registerRequestDTO) {

@@ -35,33 +35,33 @@ js/
 
 ## Ideias-chave
 
-- **Tokens:** todas as cores e fontes vêm de `css/base/tokens.css`. Trocar a paleta = editar um arquivo.
+- **Tokens:** todas as cores e fontes vêm de `src/css/base/tokens.css`. Trocar a paleta = editar um arquivo.
 - **Camadas de CSS:** ordem de carregamento tokens → reset → tipografia → componentes → página. Componentes são reutilizados; a página só define o que é dela.
 - **Nomes de classes:** convenção BEM (`bloco__elemento--modificador`).
 - **Mobile-first:** estilo base para celular; `@media (min-width: ...)` amplia para telas maiores.
-- **Módulos ES:** cada HTML carrega só o seu script de `js/pages`, que importa o que precisa de `core/` e `components/`.
+- **Módulos ES:** cada HTML carrega só o seu script de `src/views/pages`, que importa o que precisa de `core/` e `components/`.
 - **Sprite SVG:** as ilustrações da landing ficam definidas uma vez (`<symbol>`) e são usadas com `<use href="#id">`.
 
 ## Onde cada conceito é praticado
 
 | Conceito | Arquivo |
 | --- | --- |
-| Flexbox com `flex-wrap` (banner + conteúdo) | `css/pages/landing.css` |
-| CSS Grid (painéis) | `css/pages/app.css` |
+| Flexbox com `flex-wrap` (banner + conteúdo) | `src/css/pages/landing.css` |
+| CSS Grid (painéis) | `src/css/pages/app.css` |
 | Menu mobile acessível (`aria-expanded`) | `js/components/navbar.js` |
-| `IntersectionObserver` (aparecer ao rolar) | `js/pages/landing.js` |
-| Abas acessíveis (`role="tab"`, setas do teclado) | `js/pages/login.js` |
-| Constraint Validation API + mensagens próprias | `js/pages/login.js` |
-| `fetch` com `async/await` e erros | `js/core/api.js` |
-| Guard de rota no front | `js/core/auth.js` e `js/pages/app.js` |
+| `IntersectionObserver` (aparecer ao rolar) | `src/views/pages/landing.js` |
+| Abas acessíveis (`role="tab"`, setas do teclado) | `src/views/pages/login.js` |
+| Constraint Validation API + mensagens próprias | `src/views/pages/login.js` |
+| `fetch` com `async/await` e erros | `src/core/api.js` |
+| Guard de rota no front | `src/core/auth.js` e `src/views/pages/app.js` |
 
 ## Modo mock (sem backend)
 
-`js/core/auth.js` começa com `USE_MOCK = true`: qualquer login ou cadastro
+`src/core/auth.js` começa com `USE_MOCK = true`: qualquer login ou cadastro
 válido cria uma sessão falsa e leva à User Page. Para conectar ao backend:
 
-1. Ajuste `API_BASE_URL` em `js/core/api.js`.
-2. Mude `USE_MOCK` para `false` em `js/core/auth.js`.
+1. Ajuste `API_BASE_URL` em `src/core/api.js`.
+2. Mude `USE_MOCK` para `false` em `src/core/auth.js`.
 3. Ajuste os caminhos (`/auth/login`, `/auth/register`) e o formato das respostas
    (marcados com `TODO`) ao contrato real da API.
 
@@ -74,7 +74,7 @@ válido cria uma sessão falsa e leva à User Page. Para conectar ao backend:
 
 ## Próximos passos sugeridos
 
-1. Trocar as ilustrações do banner por fotos reais (`assets/images`).
+1. Trocar as ilustrações do banner por fotos reais (`src/assets/images`).
 2. Substituir o espaço reservado de "Visualização simplificada" quando o design de progresso for decidido.
 3. Preencher a User Page: resumo, metas, progresso e refeições.
 4. Decidir se o app completo continua em JS puro ou migra para Vue 3 + Vite (CSS em tokens e componentes facilita a migração).
