@@ -4,7 +4,7 @@
 // minlength) e só personaliza as mensagens.
 // ============================================================================
 
-import { login, register, redirectIfAuthenticated } from "/js/core/auth.js";
+import { login, register, redirectIfAuthenticated } from "@/core/auth.js";
 
 redirectIfAuthenticated();
 

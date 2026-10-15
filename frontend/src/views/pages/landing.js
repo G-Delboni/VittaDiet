@@ -2,7 +2,7 @@
 // landing.js: comportamentos da landing page.
 // ============================================================================
 
-import { initNavbar } from "/js/components/navbar.js";
+import { initNavbar } from "@/components/navbar.js";
 
 initNavbar();
 setCurrentYear();

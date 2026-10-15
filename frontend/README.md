@@ -48,7 +48,7 @@ js/
 | --- | --- |
 | Flexbox com `flex-wrap` (banner + conteúdo) | `src/css/pages/landing.css` |
 | CSS Grid (painéis) | `src/css/pages/app.css` |
-| Menu mobile acessível (`aria-expanded`) | `js/components/navbar.js` |
+| Menu mobile acessível (`aria-expanded`) | `src/components/navbar.js` |
 | `IntersectionObserver` (aparecer ao rolar) | `src/views/pages/landing.js` |
 | Abas acessíveis (`role="tab"`, setas do teclado) | `src/views/pages/login.js` |
 | Constraint Validation API + mensagens próprias | `src/views/pages/login.js` |

@@ -4,8 +4,8 @@
 // qualquer coisa. O conteúdo fica [hidden] até a checagem passar.
 // ============================================================================
 
-import { requireAuth, logout, getCurrentUser } from "/js/core/auth.js";
-import { initNavbar } from "/js/components/navbar.js";
+import { requireAuth, logout, getCurrentUser } from "@/core/auth.js";
+import { initNavbar } from "@/components/navbar.js";
 
 if (await requireAuth()) {
   initNavbar();
