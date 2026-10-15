@@ -37,8 +37,9 @@ public class AuthController {
     @Value("${app.allowed-origin}")
     private String allowedOrigin;
 
-    private boolean originOk(String origin) {
-        return origin != null && !origin.equals(allowedOrigin);
+    // Sem Origin (curl, app nativo) passa; com Origin, só a do front permitido.
+    private boolean originAllowed(String origin) {
+        return origin == null || origin.equals(allowedOrigin);
     }
 
     private ResponseCookie refreshCookie(String value, Duration maxAge) {
@@ -56,7 +57,6 @@ public class AuthController {
         var access = tokenService.generateToken(user);
         var refresh = refreshTokenService.create(user);
 
-
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, refreshCookie(refresh, Duration.ofDays(30)).toString())
                 .cacheControl(CacheControl.noStore())
@@ -67,7 +67,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<Void> register (@RequestBody @Valid RegisterRequestDTO registerRequestDTO) {
         if(this.userRepository.findByEmail(registerRequestDTO.getEmail()) != null) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();   // 409: e-mail já cadastrado
         }
         String encryptedPassword = new BCryptPasswordEncoder().encode(registerRequestDTO.getPassword());
         User newUser = new User(registerRequestDTO.getUsername(), registerRequestDTO.getEmail(), encryptedPassword, registerRequestDTO.getHeight(), registerRequestDTO.getUserGender());
@@ -80,7 +80,8 @@ public class AuthController {
     public ResponseEntity<LoginResponseDTO> refresh(
             @CookieValue(name = "refresh_token", required = false) String raw,
             @RequestHeader(value = "Origin", required = false) String origin) {
-        if (originOk(origin)) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();        Optional<User> user = (raw == null) ? Optional.empty() : refreshTokenService.consume(raw);
+        if (!originAllowed(origin)) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        Optional<User> user = (raw == null) ? Optional.empty() : refreshTokenService.consume(raw);
         if (user.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .header(HttpHeaders.SET_COOKIE, refreshCookie("", Duration.ZERO).toString())
@@ -98,7 +99,7 @@ public class AuthController {
     public ResponseEntity<Void> logout(
             @CookieValue(name = "refresh_token", required = false) String raw,
             @RequestHeader(value = "Origin", required = false) String origin){
-        if (originOk(origin)) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        if (!originAllowed(origin)) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         if (raw != null) refreshTokenService.revoke(raw);
         return ResponseEntity.noContent()
                 .header(HttpHeaders.SET_COOKIE, refreshCookie("", Duration.ZERO).toString())

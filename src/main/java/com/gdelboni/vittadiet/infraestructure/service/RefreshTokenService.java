@@ -17,7 +17,6 @@ import java.util.HexFormat;
 import java.util.Objects;
 import java.util.Optional;
 
-import static java.util.Objects.hash;
 
 @Service
 public class RefreshTokenService {
@@ -70,7 +69,7 @@ public class RefreshTokenService {
 
     @Transactional
     public void revoke(String raw) {
-        refreshTokenRepository.findByTokenHash(String.valueOf(hash(raw))).ifPresent(t -> t.setRevoked(true));
+        refreshTokenRepository.findByTokenHash(hash(raw)).ifPresent(t -> t.setRevoked(true));
     }
 
 }
