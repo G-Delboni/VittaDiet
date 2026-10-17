@@ -36,7 +36,7 @@ function revealOnScroll() {
     <div class="band">
       <div class="band__photo">
         <figure class="photo-tile photo-tile--mint">
-          <img src="/assets/images/salad_image.webp" alt="Foto: salada colorida">
+          <img src="@/assets/images/salad_image.webp" alt="Foto: salada colorida">
           <figcaption class="chip">Diversidade</figcaption>
         </figure>
       </div>
@@ -45,7 +45,7 @@ function revealOnScroll() {
 
         <header class="navbar" data-navbar>
           <RouterLink class="navbar__brand" to="/">
-            <img src="/assets/icons/leaf.svg" alt="" width="32" height="32">
+            <img src="@/assets/icons/leaf.svg" alt="" width="32" height="32">
             VittaDiet
           </RouterLink>
           <button class="navbar__toggle" type="button" aria-expanded="false" aria-controls="menu-principal" data-navbar-toggle>
@@ -70,7 +70,7 @@ function revealOnScroll() {
           </div>
           <figure class="hero__visual">
             <div class="hero__blob">
-              <img src="/assets/images/beautiful_meal_image.webp" alt="Foto: refeição completa" >
+              <img src="@/assets/images/beautiful_meal_image.webp" alt="Foto: refeição completa" >
             </div>
             <div class="hero__dot hero__dot--big"></div>
             <div class="hero__dot hero__dot--small"></div>
@@ -85,7 +85,7 @@ function revealOnScroll() {
     <div class="band">
       <div class="band__photo">
         <figure class="photo-tile photo-tile--leaf">
-          <img src="/assets/images/woman_eating_image.webp" alt="Foto: mulher sorrindo enquanto come">
+          <img src="@/assets/images/woman_eating_image.webp" alt="Foto: mulher sorrindo enquanto come">
           <figcaption class="chip">Equilíbrio</figcaption>
         </figure>
       </div>
@@ -134,7 +134,7 @@ function revealOnScroll() {
     <div class="band">
       <div class="band__photo">
         <figure class="photo-tile photo-tile--soft">
-          <img src="/assets/images/fresh_fruits_image.webp" alt="Foto: frutas frescas">
+          <img src="@/assets/images/fresh_fruits_image.webp" alt="Foto: frutas frescas">
           <figcaption class="chip">Saúde</figcaption>
         </figure>
       </div>

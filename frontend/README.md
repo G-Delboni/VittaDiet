@@ -19,7 +19,7 @@ Novos prefixos da API (ex.: `/users`) precisam ser acrescentados ao `proxy`.
 
 ```
 index.html            entrada do Vite (sprite SVG + <div id="app">)
-public/assets/        ícones e imagens (servidos em /assets/...)
+src/assets/           ícones e imagens (importados via @/assets/...)
 src/main.js           cria o app, importa o CSS base
 src/router/           rotas e guard de sessão
 src/views/            LandingView, LoginView, AppView

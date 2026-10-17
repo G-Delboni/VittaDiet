@@ -98,7 +98,7 @@ async function submit(event, formName, action) {
       <div class="auth__card">
 
         <RouterLink class="auth__brand" to="/">
-          <img src="/assets/icons/leaf.svg" alt="" width="32" height="32">
+          <img src="@/assets/icons/leaf.svg" alt="" width="32" height="32">
           VittaDiet
         </RouterLink>
 

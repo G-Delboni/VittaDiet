@@ -22,7 +22,7 @@ async function onLogout() {
 
     <header class="navbar" data-navbar>
       <RouterLink class="navbar__brand" to="/app">
-        <img src="/assets/icons/leaf.svg" alt="" width="32" height="32">
+        <img src="@/assets/icons/leaf.svg" alt="" width="32" height="32">
         VittaDiet
       </RouterLink>
       <button class="navbar__toggle" type="button" aria-expanded="false" aria-controls="menu-app" data-navbar-toggle>
