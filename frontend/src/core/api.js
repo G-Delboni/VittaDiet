@@ -1,6 +1,9 @@
 import { getAccessToken, setAccessToken, saveUser, clearSession } from "./storage.js";
 
-export const API_BASE_URL = "http://localhost:8080";
+// Vazio = mesma origem. Em dev o Vite faz proxy de /auth (vite.config.js) e em
+// produção o Vercel faz o rewrite; assim o cookie SameSite=Strict funciona.
+// Para apontar direto para outro host, defina VITE_API_URL.
+export const API_BASE_URL = import.meta.env.VITE_API_URL ?? "";
 
 export class ApiError extends Error {
   constructor(message, status) {

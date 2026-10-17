@@ -1,47 +1,43 @@
-<!doctype html>
-<html lang="pt-BR">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Minha área · VittaDiet</title>
-  <meta name="robots" content="noindex">
-  <link rel="icon" href="/assets/icons/leaf.svg" type="image/svg+xml">
+<script setup>
+import { onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { logout, getCurrentUser } from "@/core/auth.js";
+import { initNavbar } from "@/components/navbar.js";
+import "@/css/pages/app.css";
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&family=Young+Serif&display=swap" rel="stylesheet">
+// O guard de rota (router/index.js) já barrou quem não tem sessão.
+const router = useRouter();
+const userName = getCurrentUser()?.name ?? "bem-vindo";
 
-  <link rel="stylesheet" href="/css/base/tokens.css">
-  <link rel="stylesheet" href="/css/base/reset.css">
-  <link rel="stylesheet" href="/css/base/typography.css">
-  <link rel="stylesheet" href="/css/components/button.css">
-  <link rel="stylesheet" href="/css/components/navbar.css">
-  <link rel="stylesheet" href="/css/pages/app.css">
-</head>
-<body>
-  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+onMounted(() => initNavbar());
 
-  <!-- Fica [hidden] até o guard (app.js) confirmar que há sessão -->
-  <div class="app-shell" data-app hidden>
+async function onLogout() {
+  await logout();
+  router.push({ name: "landing" });
+}
+</script>
+
+<template>
+  <div class="app-shell">
 
     <header class="navbar" data-navbar>
-      <a class="navbar__brand" href="/app/">
+      <RouterLink class="navbar__brand" to="/app">
         <img src="/assets/icons/leaf.svg" alt="" width="32" height="32">
         VittaDiet
-      </a>
+      </RouterLink>
       <button class="navbar__toggle" type="button" aria-expanded="false" aria-controls="menu-app" data-navbar-toggle>
         <span class="sr-only">Abrir menu</span>
         <span class="navbar__bars" aria-hidden="true"></span>
       </button>
       <nav class="navbar__menu" id="menu-app" aria-label="Conta">
-        <span class="navbar__user">Olá, <span data-user-name></span></span>
-        <button class="btn btn--outline btn--sm" type="button" data-logout>Sair</button>
+        <span class="navbar__user">Olá, <span>{{ userName }}</span></span>
+        <button class="btn btn--outline btn--sm" type="button" @click="onLogout">Sair</button>
       </nav>
     </header>
 
     <main class="app" id="conteudo">
       <section class="app__welcome">
-        <h1 class="app__title">Olá, <span data-user-name></span></h1>
+        <h1 class="app__title">Olá, <span>{{ userName }}</span></h1>
         <p class="lead">Aqui vai ficar o seu painel: resumos, metas e progresso.</p>
       </section>
 
@@ -66,7 +62,4 @@
     </main>
 
   </div>
-
-  <script type="module" src="/js/pages/app.js"></script>
-</body>
-</html>
+</template>
