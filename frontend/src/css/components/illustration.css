@@ -19,3 +19,6 @@
 .stroke-forest { stroke: var(--color-forest); }
 .stroke-leaf   { stroke: var(--color-leaf); }
 .stroke-mint   { stroke: var(--color-mint); }
+
+/* Sprite SVG do index.html: fora do fluxo (antes era style="" inline, bloqueado pelo CSP) */
+.sprite { position: absolute; }

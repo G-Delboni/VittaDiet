@@ -36,3 +36,10 @@ src/css/              tokens -> base -> componentes -> páginas
 - Após F5 o guard do router chama `/auth/refresh` para recuperar o access token.
 - `VITE_API_URL` (opcional) aponta para outro host; o padrão é a mesma origem.
 - O guard de rota é só experiência de uso: **a proteção real é o backend**.
+
+## Headers de segurança
+
+- **Produção (Vercel):** `vercel.json` define CSP estrito (`script-src 'self'`, sem inline), `nosniff`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy` e HSTS, além do fallback de SPA. Se você adicionar um recurso externo (fonte, CDN, analytics), libere o domínio no CSP.
+- **Dev:** sem CSP, porque o HMR do Vite usa inline/eval.
+- **Regra:** nada de `<script>` ou `style=""` inline no HTML. Para estilo dinâmico use classes CSS.
+- **API:** os headers da resposta JSON ficam em `SecurityConfiguration` (`.headers(...)`).
