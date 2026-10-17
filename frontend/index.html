@@ -10,6 +10,9 @@
   <meta property="og:type" content="website">
   <link rel="icon" href="/src/assets/icons/leaf.svg" type="image/svg+xml">
 
+  <!-- Marca que o JS está ativo: as animações de rolagem só valem com JS (ver landing.css) -->
+  <script>document.documentElement.classList.add("js");</script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&family=Young+Serif&display=swap" rel="stylesheet">
@@ -17,7 +20,7 @@
 </head>
 <body>
 <!-- Sprite SVG: ilustrações definidas uma vez e reutilizadas com <use href="#id"> -->
-  <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+  <svg width="0" height="0" style="position: absolute" aria-hidden="true" focusable="false">
     <symbol id="ill-bowl" viewBox="0 0 120 120">
       <path class="fill-forest" d="M14 58h92a46 46 0 0 1-92 0z"/>
       <circle class="fill-leaf" cx="40" cy="48" r="14"/>
