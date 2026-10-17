@@ -21,10 +21,5 @@ public class RefreshToken {
     private User user;
     private String tokenHash;
     private LocalDateTime expirationDate;
-    private boolean revoked;
-
-    public Boolean isRevoked() {
-        return revoked;
-    }
-
+    private boolean revoked;   // o Lombok gera isRevoked() e setRevoked()
 }
