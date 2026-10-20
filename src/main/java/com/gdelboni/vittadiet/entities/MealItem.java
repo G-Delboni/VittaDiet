@@ -20,5 +20,22 @@ public class MealItem {
     private Meal meal;
     @ManyToOne(optional = false)
     private Food food;
+    @ManyToOne
+    private PersonalFood personalFood;
     private Double quantityInGrams;
+
+    @PrePersist
+    @PreUpdate
+    private void validateSingleFood() {
+        if ((food == null) == (personalFood == null)) {
+            throw new IllegalStateException("MealItem must reference exactly one of food or personalFood");
+        }
+    }
+
+    public Nutrients nutrients() {
+        Nutrients per100g = (food != null ? food.nutrientsPerHundredGrams()
+                : personalFood.nutrientsPerHundredGrams());
+        return per100g.times(quantityInGrams / 100.0);
+    }
+
 }

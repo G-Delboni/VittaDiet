@@ -1,4 +1,4 @@
-package com.gdelboni.vittadiet.services;
+package com.gdelboni.vittadiet.infraestructure.service;
 
 import com.gdelboni.vittadiet.repository.UserRepository;
 import org.jspecify.annotations.NullMarked;

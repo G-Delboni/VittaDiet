@@ -29,6 +29,12 @@ public class Meal {
     @JoinColumn(name = "user_id")
     private User user;
 
+    public Nutrients totalNutrients() {
+        return mealItems.stream()
+                .map(MealItem::nutrients)
+                .reduce(Nutrients.ZERO, Nutrients::plus);
+    }
+
     public void addFood(MealItem mealItem) {
         mealItems.add(mealItem);
     }
