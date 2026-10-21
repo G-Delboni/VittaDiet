@@ -25,10 +25,7 @@ public class Food {
     private Double proteinPerHundredGrams;
 
     public Nutrients nutrientsPerHundredGrams() {
-        return new Nutrients(
-                caloriePerHundredGrams,
-                proteinPerHundredGrams == null ? 0 : proteinPerHundredGrams,
-                carbohydratePerHundredGrams == null ? 0 : carbohydratePerHundredGrams,
-                fatPerHundredGrams == null ? 0 : fatPerHundredGrams);
+        return Nutrients.of(caloriePerHundredGrams, proteinPerHundredGrams,
+                carbohydratePerHundredGrams, fatPerHundredGrams);
     }
 }

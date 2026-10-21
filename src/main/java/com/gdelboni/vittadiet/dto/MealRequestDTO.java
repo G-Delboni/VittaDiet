@@ -2,6 +2,9 @@ package com.gdelboni.vittadiet.dto;
 
 import com.gdelboni.vittadiet.entities.Food;
 import com.gdelboni.vittadiet.enums.MealPeriod;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +14,10 @@ import java.util.List;
 @Getter
 @Setter
 public class MealRequestDTO {
+    @NotNull
     private MealPeriod mealPeriod;
-    private List<Food> mealComponents;
+    @NotEmpty @Valid
+    private List<MealItemRequestDTO> mealComponents;
+    @NotNull
     private LocalDateTime mealHour;
 }

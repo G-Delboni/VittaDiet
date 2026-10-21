@@ -26,7 +26,7 @@ public class PersonalFood {
     private Double fatPerHundredGrams;
 
     public Nutrients nutrientsPerHundredGrams() {
-        return new Nutrients(caloriePerHundredGrams, proteinPerHundredGrams,
+        return Nutrients.of(caloriePerHundredGrams, proteinPerHundredGrams,
                 carbohydratePerHundredGrams, fatPerHundredGrams);
     }
 }

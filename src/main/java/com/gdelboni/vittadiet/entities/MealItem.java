@@ -18,7 +18,7 @@ public class MealItem {
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Meal meal;
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Food food;
     @ManyToOne
     private PersonalFood personalFood;
