@@ -21,7 +21,4 @@ public record Nutrients(double calories, double protein, double carbo, double fa
         );
     }
 
-//    public Nutrients calculateNutrients(double factor) {
-//        return new Nutrients(calories * factor, protein * factor, carbo * factor, fat * factor);
-//    }
 }

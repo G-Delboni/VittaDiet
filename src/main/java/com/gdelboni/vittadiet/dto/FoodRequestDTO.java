@@ -7,5 +7,5 @@ import lombok.Setter;
 @Setter
 public class FoodRequestDTO {
     private String foodName;
-    private Double foodQuantityInGrams;
+    private Integer tacoCode;
 }
