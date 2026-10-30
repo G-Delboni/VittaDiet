@@ -26,7 +26,7 @@ public class WeightLog {
     @CreationTimestamp
     private LocalDateTime loggedAt;
 
-    @ManyToOne
-    @JoinColumn(name = "id", insertable=false, updatable=false)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "user_id")
     private User user;
 }
