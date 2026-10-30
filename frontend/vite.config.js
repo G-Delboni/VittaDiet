@@ -19,6 +19,6 @@ export default defineConfig({
     port: 5173,
     // O navegador só enxerga localhost:5173; o Vite repassa /auth ao Spring.
     // Acrescente aqui os outros prefixos da API quando existirem (ex.: "/users").
-    proxy: { '/auth': 'http://localhost:8080' },
+    proxy: { '/api': 'http://localhost:8080' },
   },
 })

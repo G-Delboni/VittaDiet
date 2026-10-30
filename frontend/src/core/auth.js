@@ -3,7 +3,7 @@ import { getAccessToken, setAccessToken, saveUser, getUser, clearSession } from 
 
 export async function login({ email, password }) {
   try {
-    const data = await request("/auth/login", { method: "POST", body: { email, password }, auth: false });
+    const data = await request("/api/auth/login", { method: "POST", body: { email, password }, auth: false });
     setAccessToken(data.token);
     if (data.username) saveUser({ name: data.username });
   } catch (error) {
@@ -15,7 +15,7 @@ export async function login({ email, password }) {
 // Os nomes seguem o form (username/height/gender) e o RegisterRequestDTO do back.
 export async function register({ username, email, password, height, gender }) {
   try {
-    await request("/auth/register", {
+    await request("/api/auth/register", {
       method: "POST",
       auth: false,
       body: { username, email, password, height: Number(height), userGender: gender },
@@ -29,7 +29,7 @@ export async function register({ username, email, password, height, gender }) {
 }
 
 export async function logout() {
-  try { await request("/auth/logout", { method: "POST", auth: false }); } catch { /* segue */ }
+  try { await request("/api/auth/logout", { method: "POST", auth: false }); } catch { /* segue */ }
   clearSession();
 }
 
