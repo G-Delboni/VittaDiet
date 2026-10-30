@@ -21,7 +21,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("auth")
+@RequestMapping("api/auth")
 public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -45,7 +45,7 @@ public class AuthController {
     private ResponseCookie refreshCookie(String value, Duration maxAge) {
         return ResponseCookie.from("refresh_token", value)
                 .httpOnly(true).secure(true).sameSite("Strict")
-                .path("/auth").maxAge(maxAge).build();
+                .path("/api/auth").maxAge(maxAge).build();
     }
 
     @PostMapping("/login")
